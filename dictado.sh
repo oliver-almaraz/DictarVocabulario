@@ -12,7 +12,7 @@ export LANG=C.UTF-8
 if [[ -z $1 ]]
 # No hay primer argumento
 then
-	printf "Pasa la ruta a documento como argumento\n"
+	printf "Pasa la ruta a un documento como argumento\n"
 	exit 1
 elif [[ ! -f $1 ]]
 then
@@ -59,7 +59,7 @@ do
 	else
 		OLD_WORD=${NEW_WORD}
 		if [[ -n ${COWS} ]]
-		# Si está instalado cowsay
+		# Si está instalado cowsay el array COWS fue definido
 		then
 			#Rand int entre 0 y el número de elmt en arr -1
 			RAND_INDEX=$((${RANDOM} % ${#COWS[@]}))
