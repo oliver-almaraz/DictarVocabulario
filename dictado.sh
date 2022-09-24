@@ -58,7 +58,7 @@ do
 		continue
 	else
 		OLD_WORD=${NEW_WORD}
-		if [[ ! -z ${COWS} ]]
+		if [[ -n ${COWS} ]]
 		# Si está instalado cowsay
 		then
 			#Rand int entre 0 y el número de elmt en arr -1
