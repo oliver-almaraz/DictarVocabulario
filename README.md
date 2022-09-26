@@ -1,7 +1,7 @@
 # Dictar Vocabulario
 Script shell que muestra una línea al azar de un documento pasado como arguento con `cowsay`. 
 Útil para estudiar vocabulario que fue puesto en un documento con una palabra por línea. 
-Las líneas en el documento de vocabulario que comienzan con "# " son ignoradas. 
+Las líneas en el documento de vocabulario que comienzan con "#" o con espacios son ignoradas. 
 Si `cowsay` no está instalado muestra la línea en un formato simple.
 
 Yo lo uso para generar palabras al azar en griego antiguo para que mis alumnos elaboren oraciones con ellas.
