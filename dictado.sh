@@ -4,7 +4,7 @@
 # línea aleatoria cada vez que se presiona enter.
 # Útil para estudiar vocabulario organizado en un
 # doc una palabra por renglón. La líneas que empiezan
-# con '# ' son ignoradas.
+# con '#' o con espacios son ignoradas.
 # https://github.com/oliver-almaraz/DictarVocabulario/
 
 export LANG=C.UTF-8
@@ -20,7 +20,7 @@ then
 	exit 2
 fi
 
-NO_LINES=$(awk 'END{print NR -1}' $1)
+NR_LINES=$(wc -l < $1)
 OLD_WORD=''
 
 # Comprobar si cowsay está instalado
@@ -32,12 +32,12 @@ if [[ $? -eq 0 ]]
 then
 	# Selección personal entre las cows disponibles
 #	COWS=(blowfish bud-frogs bunny cheese cower default dragon \
-# dragon-and-cow elephant elephant-in-snake \
-# koala meow moofasa moose sheep skeleton \
-# stegosaurus turkey turtle tux vader)
+#dragon-and-cow elephant elephant-in-snake \
+#koala meow moofasa moose sheep skeleton \
+#stegosaurus turkey turtle tux vader)
 
 	# O usar todos los cows disponibles:
-	COWS=$(ls -l /usr/share/cows/*.cow | awk '{split($9,array,"/"); print array[5]}')
+	declare -a COWS=($(cowsay -l | awk 'NR>1 {gsub(" ","\n"); print $0}'))
 else
 	printf "Preiona Enter para mostrar una palabra al azar.\n\
 Para salir presiona Ctrl + c\n"
@@ -49,11 +49,12 @@ read WAIT_FOR_LINEFEED
 while :
 do
 	# Numero aleat entre 1 y N_LINES inclusive
-	RAND=$((1 + ${RANDOM} % ${NO_LINES} +1 ))
-	NEW_WORD=$(awk "NR==${RAND} {print \$0}" ${1})
+	RAND=$((1 + ${RANDOM} % ${NR_LINES} +1 ))
+	# Regex que ignora líneas vacías o que empiezan con #
+	NEW_WORD=$(awk "NR==${RAND} && ! /^[[:space:]#]+|^\$/ {print \$0}" ${1})
 
-	# Evitar repeticiones inmediatas e ignorar líneas que comienzen con '# '
-	if [[ $NEW_WORD = $OLD_WORD ]] || [[ $(echo $NEW_WORD | awk '{print $1}') = '#' ]]
+	# Evitar repeticiones inmediatas
+	if [[ $NEW_WORD = $OLD_WORD ]] || [[ $NEW_WORD = "" ]]
 	then
 		continue
 	else
