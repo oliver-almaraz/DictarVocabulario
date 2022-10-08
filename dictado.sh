@@ -31,10 +31,12 @@ if [[ $? -eq 0 ]]
 # Si cowsay está instalado:
 then
 	# Selección personal entre las cows disponibles
-#	COWS=(blowfish bud-frogs bunny cheese cower default dragon \
-#dragon-and-cow elephant elephant-in-snake \
-#koala meow moofasa moose sheep skeleton \
-#stegosaurus turkey turtle tux vader)
+#	COWS=(
+#           blowfish bud-frogs bunny cheese cower default dragon
+#           dragon-and-cow elephant elephant-in-snake
+#           koala meow moofasa moose sheep skeleton
+#           stegosaurus turkey turtle tux vader
+#       )
 
 	# O usar todos los cows disponibles:
 	declare -a COWS=($(cowsay -l | awk 'NR>1 {gsub(" ","\n"); print $0}'))
@@ -44,6 +46,7 @@ Para salir presiona Ctrl + c\n"
 fi
 
 read WAIT_FOR_LINEFEED
+clear
 
 # Comienza el LOOP
 while :
